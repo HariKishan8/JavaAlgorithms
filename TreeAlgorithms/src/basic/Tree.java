@@ -1,5 +1,7 @@
 package basic;
 
+import java.util.*;
+
 public class Tree {
 	Node root;
 	
@@ -7,27 +9,26 @@ public class Tree {
 		this.root = null;
 	}
 	
-	private void insertNode(Node a, Node root){
+	
+	public boolean isEmpty(){
+		return (this.root == null);	
+	}
+	
+	private Node insertNode(int key, Node root){
 //		Assuming it's a Binary Search Tree
-		if(a.key <= root.key)
-			if(root.left == null)
-				root.left = a;
-			else
-				insertNode(a, root.left);
-		else
-			if(root.right == null)
-				root.right = a;
-			else
-				insertNode(a, root.right);
+		if (root == null)
+			root = new Node(key);
+		else if(key <= root.key){
+			root.left = insertNode(key, root.left);
+		}	
+		else{
+			root.right = insertNode(key, root.right);
+		}
+		return root;	
 	}
 	
 	public void insertNode(int key){
-		Node a = new Node(key);
-		if (this.root == null){
-			this.root = a;
-			return;
-		}
-		insertNode(a, this.root);	
+		this.root = insertNode(key, this.root);	
 	}
 	
 	public void deleteNode(int key){
@@ -121,6 +122,25 @@ public class Tree {
 		return b;
 	}
 	
+	private void preorderPrintTree(Node a){
+		if (a == null)
+			return;
+		
+		System.out.print(a.key);
+		System.out.println();
+		preorderPrintTree(a.left);		
+		preorderPrintTree(a.right);
+	}
+	
+	private void postorderPrintTree(Node a){
+		if (a == null)
+			return;
+
+		postorderPrintTree(a.left);		
+		postorderPrintTree(a.right);
+		System.out.print(a.key);
+		System.out.println();
+	}
 	
 	private void inorderPrintTree(Node a){
 		if (a == null)
@@ -133,7 +153,7 @@ public class Tree {
 			
 	}
 	
-	public void printTree(){
+	public void printInorder(){
 //		Inorder traversal print
 		if (this.root == null){
 			System.out.println("Empty tree");
@@ -143,29 +163,77 @@ public class Tree {
 		
 	}
 	
+	public void printPreorder(){
+//		Preorder traversal print
+		if (this.root == null){
+			System.out.println("Empty tree");
+			return;
+		}
+		preorderPrintTree(this.root);
+		
+	}
+	
+	public void printPostorder(){
+//		Postorder traversal print
+		if (this.root == null){
+			System.out.println("Empty tree");
+			return;
+		}
+		postorderPrintTree(this.root);
+		
+	}
+	
 	public static void main(String[] args) {
 		Tree t = new Tree();
 		
-		t.insertNode(20);
-		t.insertNode(10);
-		t.insertNode(30);
-		t.insertNode(5);
-		t.insertNode(15);
-		t.insertNode(25);
-		t.insertNode(35);
-		t.insertNode(2);
-		t.insertNode(7);
-		t.insertNode(12);
-		t.insertNode(17);
-		t.insertNode(22);
-		t.insertNode(28);
-		t.insertNode(32);
-		t.insertNode(40);
+//		t.insertNode(20);
+//		t.insertNode(10);
+//		t.insertNode(30);
+//		t.insertNode(5);
+//		t.insertNode(15);
+//		t.insertNode(25);
+//		t.insertNode(35);
+//		t.insertNode(2);
+//		t.insertNode(7);
+//		t.insertNode(12);
+//		t.insertNode(17);
+//		t.insertNode(22);
+//		t.insertNode(28);
+//		t.insertNode(32);
+//		t.insertNode(40);
 		
-		t.printTree();
-		System.out.println();
-		t.deleteNode(40);
-		t.printTree();
+		t.insertNode(5);
+		t.insertNode(2);
+		t.insertNode(1);
+		t.insertNode(3);
+		t.insertNode(7);
+		t.insertNode(6);
+		t.insertNode(8);
+		
+		
+//		t.printInorder();
+//		System.out.println();
+//		t.printPreorder();
+//		System.out.println();
+//		t.printPostorder();
+//		System.out.println();
+		
+		AdditionalAlgos obj = new AdditionalAlgos(t);
+//		obj.isBalanced();
+//		LinkedList<Node> list = new LinkedList<Node>();
+//		list.add(new Node(1));
+//		list.add(new Node(2));
+//		list.add(new Node(3));
+//		ArrayList<LinkedList<Node>> arrList1 = new ArrayList<LinkedList<Node>>() ;
+//		arrList1.add(list);
+//		System.out.println(list);
+		
+		
+		ArrayList<LinkedList<Node>> arrList = new ArrayList<LinkedList<Node>>() ;
+//		LinkedList<Node> list = new LinkedList<>();
+//		arrList.add(list);
+//		arrList[0].add(new Node(0));
+		obj.NodeListDepth(0, arrList, t.root);
 	}
 
 
