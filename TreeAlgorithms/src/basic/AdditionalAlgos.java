@@ -66,6 +66,87 @@ public class AdditionalAlgos {
 		return;
 	}
 	
-
+	public boolean isBST(Node n){
+		return isBST(n, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	public boolean isBST(Node n, int min, int max){
+		if(n == null)
+			return true;
+		
+		if(n.key <= min && n.key > max)
+			return false;
+		
+		if((!isBST(n.left, min, n.key)) || (!isBST(n.right, n.key, max)))
+				return false;
+		
+		return true;
+	}
+	
+	public Node firstCmnAncestor(int key1, int key2){
+		Node a = this.tree.searchNode(key1);
+		Node b = this.tree.searchNode(key2);
+		return firstCmnAncestor(a, b);
+	}
+	
+	public Node firstCmnAncestor(Node a, Node b){
+//		if the elements are on either side of the root - this only works in BST
+//		for general solution I'm commenting it out
+//		if (((a.key <= this.tree.root.key)  && (this.tree.root.key < b.key))|| 
+//			((b.key <= this.tree.root.key)  && (this.tree.root.key < a.key))){
+//			return this.tree.root;   
+//		   }
+//		they are on same side
+//		start from node a and track back to root marking nodes n path to be visited
+		
+		while(a != this.tree.root){
+			a.visited = true;
+			a = a.parent;
+		}
+//		even marking root to be visited
+		a.visited = true;
+//		completed tracking back form node a
+//		now start tracking from node b and check if it's already visited
+		while(!b.visited){
+			b = b.parent;
+		}
+//		loop stops where it is already visited which is the first common ancestor
+		return b;
+	}
+	
+//	Failed Attempt !!!
+//	public Node isBST(Node node, Node lastNode){
+//		if(node == null)
+//			return null;
+//		if(node.left != null){
+//			lastNode = isBST(node.left, lastNode);
+//			if(lastNode == null){
+////				if it's just the root in the tree.	
+//				if(node == this.tree.root)
+//					return node;
+//				return null;
+//			}
+//					
+//		}
+//
+//		if(node.key < lastNode.key){
+//			System.out.println("Not BST");
+//			return null;
+//		}
+//		lastNode = node;
+//		if(node.right != null){
+//			lastNode = isBST(node.right, lastNode);
+//			if(lastNode == null)
+//				return null;
+//			if(node.key >= lastNode.key){
+//				System.out.println("Not BST");
+//				return null;
+//			}
+//				
+//		}
+//		
+//		return lastNode;
+//	}
+	
+ 
 	
 }
