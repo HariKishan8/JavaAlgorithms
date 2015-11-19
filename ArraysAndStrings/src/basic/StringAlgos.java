@@ -108,6 +108,63 @@ public class StringAlgos {
 		return str;
 	}
 	
+	public static void setZero(int[][] mat){
+//		no of rows
+		int m = mat.length;
+//		no of columns
+		int n = mat[0].length;
+		boolean[] row = new boolean[m];
+		boolean[] column = new boolean[n];
+		
+		for (int i = 0; i<m; i++){
+			for(int j =0; j<n; j++){
+				if(mat[i][j] == 0){
+					row[i] = true;
+					column[j] = true;
+				}
+			}
+		}
+		for (int i =0; i<m; i++){
+			for(int j =0; j<n; j++){
+				if(row[i] || column[j]){
+					mat[i][j] = 0;
+				}
+			}		
+		}
+	}
+	
+	public static String compressString(String str){
+		char[] sArr = str.toCharArray();
+		char[] newSArr= new char[str.length()];
+		StringBuffer newStr = new StringBuffer();
+		int count = 1, j= 0, i;
+		for(i = 0; i<str.length(); i++){
+			if((i != 0)&& (sArr[i] == sArr[i-1])){
+				count++;
+			}
+			else{
+				if(count!=1){
+					newStr.append(String.valueOf(count));
+					count = 1;
+				}
+					
+				newStr.append(sArr[i]);
+			}
+		}
+		if(i == str.length()){
+			if(count != 1){
+				newStr.append(String.valueOf(count));
+			}
+		}
+		
+		if(newStr.length() < str.length())
+			return (newStr.toString());
+		else
+			return str;
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		String str1 = "I am wrong    ";
 //		if(hasUniqueCharsBW(str))
@@ -115,8 +172,19 @@ public class StringAlgos {
 //		String str2 = "Am I wrong";
 //		isPermutationCount(str1, str2);
 		
-		System.out.println(replaceSpace(str1.toCharArray(), str1.length()-4));
+//		System.out.println(replaceSpace(str1.toCharArray(), str1.length()-4));
+		
+//		int[][] mat = {
+//				{1, 2, 3, 4},
+//				{10, 0, 12, 13},
+//				{20, 21, 22, 23}				
+//		};
+//		setZero(mat);
+//		System.out.print(Arrays.deepToString(mat));
+		
+		System.out.println(compressString("aabbcc"));
 		
 	}
+	
 
 }
